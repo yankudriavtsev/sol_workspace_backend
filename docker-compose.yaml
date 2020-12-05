@@ -1,0 +1,67 @@
+version: '3.5'
+
+services:
+  sol_workspace_database:
+    container_name: sol_workspace_database
+    image: postgres:13-alpine
+    volumes:
+      - ./database/data/:/var/lib/postgresql/data/
+      - ./database/init/:/docker-entrypoint-initdb.d/
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+    networks:
+      - sol_workspace
+  
+  sol_workspace_adminer:
+    container_name: sol_workspace_adminer
+    build:
+      context: ./
+      dockerfile: DockerfileAdminer
+    image: sol_workspace/adminer:v1
+    networks:
+      - sol_workspace
+  
+  sol_workspace_nginx:
+    build:
+      context: ./
+      dockerfile: DockerfileNginx
+    image: sol_workspace/nginx:v1
+    container_name: sol_workspace_nginx
+    volumes:
+      - ./src/:/var/www/html/
+      - ./nginx/logs/:/var/log/nginx/
+    ports:
+      - 8010:8010
+    networks:
+      sol_workspace:
+        aliases:
+          - api.loc-sol-workspace.com
+
+  sol_workspace_php:
+    build:
+      context: ./
+      dockerfile: DockerfilePHP
+    image: sol_workspace/php:v1
+    container_name: sol_workspace_php
+    volumes:
+      - ./src/:/var/www/html
+    networks:
+      - sol_workspace
+
+  sol_workspace_php_cli:
+    build:
+      context: ./
+      dockerfile: DockerfilePHPCli
+    image: sol_workspace/php_cli:v1
+    container_name: sol_workspace_php_cli
+    volumes:
+      - ./src/:/var/www/html/
+    networks:
+      - sol_workspace
+    user: ${CURRENT_UID}
+
+networks:
+  sol_workspace: 
+    external: false
+    name: sol_workspace

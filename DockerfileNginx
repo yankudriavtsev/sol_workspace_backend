@@ -1,0 +1,4 @@
+FROM nginx:stable-alpine
+
+COPY ./nginx/configs/ /etc/nginx/conf.d/
+COPY ./nginx/certificates/ /etc/ssl/sol_workspace/

@@ -1,0 +1,7 @@
+FROM php:8.0-cli-alpine
+
+RUN apk update && \
+    apk add postgresql-dev composer && \
+    docker-php-ext-install pdo pdo_pgsql
+
+ENV COMPOSER_MEMORY_LIMIT -1

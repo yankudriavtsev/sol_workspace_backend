@@ -1,0 +1,6 @@
+src/vendor
+src/Homestead.json
+src/Homestead.yaml
+src/.env
+src/.phpunit.result.cache
+database/data/
