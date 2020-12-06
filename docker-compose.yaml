@@ -19,6 +19,8 @@ services:
       context: ./
       dockerfile: DockerfileAdminer
     image: sol_workspace/adminer:v1
+    ports:
+      - 8011:8080
     networks:
       - sol_workspace
   

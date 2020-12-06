@@ -25,7 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +60,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('jwt');
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,8 @@ $app->configure('app');
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\RepositoryServiceProvider::class);
+$app->register(App\Providers\ServicesServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
