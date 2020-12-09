@@ -7,11 +7,11 @@ use App\Repositories\Interfaces\RoleRepositoryInterface;
 
 class RolesSeeder extends Seeder
 {
-    private RoleRepositoryInterface $roleRpository;
+    private RoleRepositoryInterface $roleRepository;
 
-    public function __construct(RoleRepositoryInterface $roleRpository)
+    public function __construct(RoleRepositoryInterface $roleRepository)
     {
-        $this->roleRpository = $roleRpository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -29,7 +29,7 @@ class RolesSeeder extends Seeder
         ];
 
         foreach ($roles as $role) {
-            $this->roleRpository->updateOrCreate($role, $role);
+            $this->roleRepository->updateOrCreate($role, $role);
         }
     }
 }
