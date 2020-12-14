@@ -18,4 +18,9 @@ abstract class BaseRepository implements BaseInterface
     {
         return ($this->getModel())::updateOrCreate($attributes, $values);
     }
+
+    public function create(array $data): Model
+    {
+        return ($this->getModel())::create($data);
+    }
 }

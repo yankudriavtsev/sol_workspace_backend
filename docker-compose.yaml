@@ -38,7 +38,7 @@ services:
     networks:
       sol_workspace:
         aliases:
-          - api.loc-sol-workspace.com
+          - api.loc-sol-workspace.docker
 
   sol_workspace_php:
     build:

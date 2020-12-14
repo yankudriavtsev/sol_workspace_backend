@@ -16,7 +16,7 @@ class AuthController extends Controller
         ]);
 
         try {
-           return response()->json($authService->login($data['email'], $data['password']));
+            return response()->json($authService->login($data['email'], $data['password']));
         } catch (InvalidCredentialsException $e) {
             return response()->json(['message' => 'Invalid Credentials'], 422);
         } catch (\Exception $e) {
