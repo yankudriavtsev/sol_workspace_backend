@@ -23,4 +23,9 @@ abstract class BaseRepository implements BaseInterface
     {
         return ($this->getModel())::create($data);
     }
+
+    public function exists(array $conditions): bool
+    {
+        return ($this->getModel())::where($conditions)->exists();
+    }
 }

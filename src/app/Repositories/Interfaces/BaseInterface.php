@@ -11,4 +11,6 @@ interface BaseInterface
     public function updateOrCreate(array $attributes, array $values = []): Model;
 
     public function create(array $data): Model;
+
+    public function exists(array $conditions): bool;
 }
