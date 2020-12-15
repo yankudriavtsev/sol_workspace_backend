@@ -43,10 +43,12 @@ class JwtService implements JwtServiceInterface
         $tokenExp = Carbon::now('UTC')->addMinutes($this->ttl)->getTimestamp();
         $refreshTokenExp = Carbon::now('UTC')->addMinutes($this->refreshTtl)->getTimestamp();
         $payload = array_merge($payloadData, [
-            'exp' => $tokenExp
+            'exp' => $tokenExp,
+            'type' => self::TOKEN_TYPE_ACCESS,
         ]);
         $refreshPayload = array_merge($payloadData, [
-            'exp' => $refreshTokenExp
+            'exp' => $refreshTokenExp,
+            'type' => self::TOKEN_TYPE_REFRESH,
         ]);
 
         return [

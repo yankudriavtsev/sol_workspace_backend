@@ -11,8 +11,7 @@ up_build:
 	CURRENT_UID=${CURRENT_UID}:${CURRENT_UID} docker-compose up -d --build
 
 permissions:
-	sudo chown -R ${CURRENT_UID}:${CURRENT_UID} ./database/*
-	sudo chmod -R 777 ./src/storage/logs
+	sudo chmod -R 777 ./src/storage
 
 phpcli:
 	CURRENT_UID=${CURRENT_UID}:${CURRENT_UID} docker-compose run --rm -w "/var/www/html" sol_workspace_php_cli /bin/ash
