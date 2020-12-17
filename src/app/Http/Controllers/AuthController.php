@@ -28,11 +28,11 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="Invalid input", @OA\JsonContent()
+     *         description="Invalid input"
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Access token and refresh token", @OA\JsonContent()
+     *         description="Access token and refresh token"
      *     )
      * )
      */

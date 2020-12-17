@@ -12,6 +12,9 @@ class JwtService implements JwtServiceInterface
     private string $secret;
     private int $ttl;
     private int $refreshTtl;
+    private string $algo;
+
+    const ALLOWED_ALGORITHMS = ['ES256', 'HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512'];
 
     public function __construct(ConfigRepository $configRepository)
     {
@@ -33,9 +36,16 @@ class JwtService implements JwtServiceInterface
             throw new InvalidJwtConfigurationException('Invalid JWT config parameter "refresh_ttl"');
         }
 
+        if (empty($configRepository->get('jwt.algo')) or
+            !in_array($configRepository->get('jwt.algo'), self::ALLOWED_ALGORITHMS)
+        ) {
+            throw new InvalidJwtConfigurationException('Invalid JWT config parameter "algo"');
+        }
+
         $this->secret = $configRepository->get('jwt.secret');
         $this->ttl = $configRepository->get('jwt.ttl');
         $this->refreshTtl = $configRepository->get('jwt.refresh_ttl');
+        $this->algo = $configRepository->get('jwt.algo');
     }
 
     public function make(array $payloadData): array
@@ -53,13 +63,18 @@ class JwtService implements JwtServiceInterface
 
         return [
             'token' => new JwtToken(
-                JWT::encode($payload, $this->secret),
+                JWT::encode($payload, $this->secret, $this->algo),
                 $tokenExp
             ),
             'refresh_token' => new JwtToken(
-                JWT::encode($refreshPayload, $this->secret),
+                JWT::encode($refreshPayload, $this->secret, $this->algo),
                 $refreshTokenExp
             )
         ];
+    }
+
+    public function decode(string $token): object
+    {
+        return JWT::decode($token, $this->secret, self::ALLOWED_ALGORITHMS);
     }
 }

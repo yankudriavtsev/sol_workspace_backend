@@ -20,3 +20,7 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'auth'], function() use ($router) {
     $router->post('/login', 'AuthController@login');
 });
+
+$router->group(['prefix' => 'roles'], function() use ($router) {
+    $router->get('/', 'RolesController@list');
+});

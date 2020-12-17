@@ -40,4 +40,17 @@ return [
     */
 
     'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
+
+    /*
+    |--------------------------------------------------------------------------
+    | JWT hashing algorithm
+    |--------------------------------------------------------------------------
+    |
+    | Specify the hashing algorithm that will be used to sign the token.
+    |
+    | Possible values: ES256, HS256, HS384, HS512, RS256, RS384, RS512
+    |
+    */
+
+    'algo' => env('JWT_ALGO', 'HS256'),
 ];
