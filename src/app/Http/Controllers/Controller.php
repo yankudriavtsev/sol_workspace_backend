@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Psr\Log\LoggerInterface;
 use Laravel\Lumen\Routing\Controller as BaseController;
+
 /**
  * @OA\Info(
  *     description="Sol.Workspace API",

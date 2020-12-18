@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Repositories\Interfaces\RoleRepositoryInterface;
 
-class RolesSeeder extends Seeder
+class AdminRoleSeeder extends Seeder
 {
     private RoleRepositoryInterface $roleRepository;
 
@@ -21,15 +21,9 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
+        $this->roleRepository->updateOrCreate(
             ['name' => 'Administrator', 'slug' => 'admin'],
-            ['name' => 'Project Manager', 'slug' => 'project_manager'],
-            ['name' => 'Developer', 'slug' => 'developer'],
-            ['name' => 'Support', 'slug' => 'support'],
-        ];
-
-        foreach ($roles as $role) {
-            $this->roleRepository->updateOrCreate($role, $role);
-        }
+            ['name' => 'Administrator', 'slug' => 'admin']
+        );
     }
 }

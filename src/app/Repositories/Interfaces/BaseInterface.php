@@ -3,6 +3,7 @@
 namespace App\Repositories\Interfaces;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Pagination\Paginator;
 
 interface BaseInterface
 {
@@ -13,4 +14,6 @@ interface BaseInterface
     public function create(array $data): Model;
 
     public function exists(array $conditions): bool;
+
+    public function paginate(): Paginator;
 }

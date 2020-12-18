@@ -15,7 +15,6 @@
                     "Auth"
                 ],
                 "summary": "Login",
-                "operationId": "App\\Http\\Controllers\\AuthController::login",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -55,7 +54,22 @@
                         "description": "Unauthorized"
                     },
                     "200": {
-                        "description": "List of roles"
+                        "description": "List of roles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Role"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -67,6 +81,28 @@
         }
     },
     "components": {
+        "schemas": {
+            "Role": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Role name"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "role_slug"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Role"
+                }
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",

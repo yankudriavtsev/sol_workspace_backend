@@ -2,36 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RoleResource;
+use App\Repositories\Interfaces\RoleRepositoryInterface;
+use Illuminate\Http\Resources\Json\JsonResource;
+
 class RolesController extends Controller
 {
+    private RoleRepositoryInterface $roleRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RoleRepositoryInterface $roleRepostory)
     {
         $this->middleware('auth');
+
+        $this->roleRepository = $roleRepostory;
     }
 
-    /**
-     * @OA\Get(
-     *     path="/roles",
-     *     tags={"Roles"},
-     *     summary="List of roles",
-     *     security={{"bearerAuth":{}}},
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized"
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="List of roles"
-     *     )
-     * )
-     */
-    public function list()
+    public function list(): JsonResource
     {
-        var_dump(request()->jwt_payload);exit;
+        return RoleResource::collection($this->roleRepository->paginate());
     }
 }
