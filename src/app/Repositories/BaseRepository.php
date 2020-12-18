@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Repositories\Interfaces\BaseInterface;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepository implements BaseInterface
@@ -27,5 +28,10 @@ abstract class BaseRepository implements BaseInterface
     public function exists(array $conditions): bool
     {
         return ($this->getModel())::where($conditions)->exists();
+    }
+
+    public function paginate(): Paginator
+    {
+        return ($this->getModel())::paginate();
     }
 }

@@ -72,14 +72,14 @@ return [
         | Absolute path to directory containing the swagger annotations are stored.
         |--------------------------------------------------------------------------
          */
-        'annotations' => base_path('app'),
+        'annotations' => base_path(''),
 
         /*
         |--------------------------------------------------------------------------
         | Absolute path to directories that you would like to exclude from swagger generation
         |--------------------------------------------------------------------------
          */
-        'excludes' => [],
+        'excludes' => [base_path('vendor')],
 
         /*
         |--------------------------------------------------------------------------
