@@ -42,9 +42,10 @@ class AuthService implements AuthServiceInterface
             throw new InvalidCredentialsException();
         }
 
-        return $this->jwtService->make(['user_id' => $user->id]);
+        return $this->jwtService->make(['user_id' => $user->id, 'role_id' => $user->role_id]);
     }
 
+    // TODO move to another service
     public function registerAdminUser(string $name, string $email, string $password): User
     {
         $role = $this->roleRepository->getOneByConditions(['slug' => $this->roleRepository::ADMIN_SLUG]);

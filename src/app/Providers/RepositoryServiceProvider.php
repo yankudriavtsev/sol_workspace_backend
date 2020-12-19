@@ -21,5 +21,9 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\Interfaces\RoleRepositoryInterface',
             'App\Repositories\RoleRepository'
         );
+        $this->app->bind(
+            'App\Repositories\Interfaces\PermissionRepositoryInterface',
+            'App\Repositories\PermissionRepository'
+        );
     }
 }

@@ -80,7 +80,8 @@ $app->configure('jwt');
 // ]);
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
+    'authenticate' => App\Http\Middleware\Authenticate::class,
+    'authorize' => \App\Http\Middleware\Authorize::class,
 ]);
 
 /*
@@ -99,7 +100,8 @@ $app->routeMiddleware([
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\RepositoryServiceProvider::class);
 $app->register(App\Providers\ServicesServiceProvider::class);
-$app->register(\SwaggerLume\ServiceProvider::class);
+$app->register(SwaggerLume\ServiceProvider::class);
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

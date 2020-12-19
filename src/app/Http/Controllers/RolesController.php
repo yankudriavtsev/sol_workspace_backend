@@ -10,15 +10,8 @@ class RolesController extends Controller
 {
     private RoleRepositoryInterface $roleRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct(RoleRepositoryInterface $roleRepostory)
     {
-        $this->middleware('auth');
-
         $this->roleRepository = $roleRepostory;
     }
 

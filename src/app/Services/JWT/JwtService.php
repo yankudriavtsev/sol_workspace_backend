@@ -62,7 +62,7 @@ class JwtService implements JwtServiceInterface
         ]);
 
         return [
-            'token' => new JwtToken(
+            'access_token' => new JwtToken(
                 JWT::encode($payload, $this->secret, $this->algo),
                 $tokenExp
             ),
