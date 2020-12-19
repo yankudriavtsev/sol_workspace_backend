@@ -3,22 +3,20 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Psr\Log\LoggerInterface;
-use UnexpectedValueException;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\BeforeValidException;
-use App\Services\JWT\JwtServiceInterface;
-use Firebase\JWT\SignatureInvalidException;
+use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Authenticate
 {
-    private JWTServiceInterface $jwtService;
-    private LoggerInterface $logger;
+    /**
+     * The authentication guard factory instance.
+     *
+     * @var \Illuminate\Contracts\Auth\Factory
+     */
+    protected Auth $auth;
 
-    public function __construct(JwtServiceInterface $jwtService, LoggerInterface $logger)
+    public function __construct(Auth $auth)
     {
-        $this->jwtService = $jwtService;
-        $this->logger = $logger;
+        $this->auth = $auth;
     }
     /**
      * Handle an incoming request.
@@ -28,32 +26,11 @@ class Authenticate
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        $token = $request->bearerToken();
-
-        if (!$token) {
+        if ($this->auth->guard($guard)->guest()) {
             return response('Unauthorized.', 401);
         }
-
-        try {
-            $jwtPayload = $this->jwtService->decode($token);
-        } catch (ExpiredException $e) {
-            return response('JWT token expired.', 401);
-        } catch (UnexpectedValueException | SignatureInvalidException | BeforeValidException $e) {
-            return response('Unauthorized.', 401);
-        } catch (\Exception $e) {
-            $this->logger->error($e->getTraceAsString());
-            return response('Server error. Try again later', 500);
-        }
-
-        if ($jwtPayload->type !== JwtServiceInterface::TOKEN_TYPE_ACCESS) {
-            return response('Invalid JWT token type.', 401);
-        }
-
-        $request->merge([
-            'jwt_payload' => $jwtPayload
-        ]);
 
         return $next($request);
     }

@@ -19,11 +19,6 @@ class ServicesServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'App\Services\JWT\JwtServiceInterface',
-            'App\Services\JWT\JwtService'
-        );
-
-        $this->app->bind(
             'App\Services\Permission\PermissionServiceInterface',
             'App\Services\Permission\PermissionService'
         );

@@ -2,4 +2,6 @@
 
 namespace App\Services\Auth\Exceptions;
 
-class InvalidCredentialsException extends \Exception {}
+class InvalidCredentialsException extends \Exception {
+    
+}

@@ -23,7 +23,7 @@ class Authorize
      */
     public function handle($request, Closure $next, string $permissionSlug)
     {
-        if ($this->permissionService->can($request->jwt_payload->role_id, $permissionSlug)) {
+        if ($this->permissionService->can(auth()->user()->role_id, $permissionSlug)) {
             return $next($request);
         }
         

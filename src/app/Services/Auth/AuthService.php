@@ -3,10 +3,8 @@
 namespace App\Services\Auth;
 
 use App\Models\User;
-use App\Repositories\Interfaces\RoleRepositoryInterface;
 use Illuminate\Contracts\Hashing\Hasher;
-use App\Services\JWT\JwtServiceInterface;
-use App\Services\Auth\Exceptions\InvalidUserException;
+use App\Repositories\Interfaces\RoleRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Auth\Exceptions\InvalidCredentialsException;
 
@@ -15,34 +13,30 @@ class AuthService implements AuthServiceInterface
     private Hasher $hasher;
     private UserRepositoryInterface $userRepository;
     private RoleRepositoryInterface $roleRepository;
-    private JwtServiceInterface $jwtService;
 
     public function __construct(
         Hasher $hasher,
         UserRepositoryInterface $userRepository,
-        JwtServiceInterface $jwtService,
         RoleRepositoryInterface $roleRepository
     ) {
         $this->hasher = $hasher;
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
-        $this->jwtService = $jwtService;
     }
 
-    public function login(string $email, string $passowrd): array
+    public function login(array $credentials): array
     {
-        /** @param \Models\User $user */
-        $user = $this->userRepository->getOneByConditions(['email' => $email]);
+        $token = auth()->attempt($credentials);
 
-        if (!$user) {
-            throw new InvalidUserException('Invalid email');
-        }
-
-        if (!$this->hasher->check($passowrd, $user->password)) {
+        if (!$token) {
             throw new InvalidCredentialsException();
         }
 
-        return $this->jwtService->make(['user_id' => $user->id, 'role_id' => $user->role_id]);
+        return [
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ];
     }
 
     // TODO move to another service
