@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: secret
     networks:
       - sol_workspace
-  
+
   sol_workspace_adminer:
     container_name: sol_workspace_adminer
     build:
@@ -23,7 +23,7 @@ services:
       - 8011:8080
     networks:
       - sol_workspace
-  
+
   sol_workspace_nginx:
     build:
       context: ./
@@ -62,6 +62,22 @@ services:
     networks:
       - sol_workspace
     user: ${CURRENT_UID}
+
+  sol_workspace_redis:
+    container_name: sol_workspace_redis
+    image: redis:5-alpine
+    networks:
+      - sol_workspace
+
+  sol_workspace_redis_commander:
+    container_name: sol_workspace_redis_commander
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:sol_workspace_redis:6379
+    ports:
+      - "8012:8081"
+    networks:
+      - sol_workspace
 
 networks:
   sol_workspace: 

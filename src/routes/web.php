@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Services\Permission\PermissionEnum;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -49,7 +51,7 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('/login', 'AuthController@login');
 });
 
-$router->group(['prefix' => 'roles'], function () use ($router) {
+$router->group(['prefix' => 'roles', 'middleware' => 'authenticate'], function () use ($router) {
     /**
      * @OA\Get(
      *     path="/roles",
@@ -73,5 +75,5 @@ $router->group(['prefix' => 'roles'], function () use ($router) {
      *     )
      * )
      */
-    $router->get('/', 'RolesController@list');
+    $router->get('/', ['uses' => 'RolesController@list', 'middleware' => 'authorize:' . PermissionEnum::ROLES_VIEW]);
 });
