@@ -16,8 +16,10 @@ class AddRolesTable extends Migration
         if (!Schema::hasTable('roles')) {
             Schema::create('roles', function (Blueprint $table) {
                 $table->id();
-                $table->string('name')->unique();
+                $table->string('name');
                 $table->string('slug')->unique();
+                $table->tinyInteger('is_editable')->default(1);
+                $table->tinyInteger('is_visible')->default(1);
                 $table->timestamps();
             });
         }

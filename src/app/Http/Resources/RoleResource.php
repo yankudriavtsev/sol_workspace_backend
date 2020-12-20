@@ -35,6 +35,8 @@ class RoleResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
+            'is_visible' => $this->is_visible,
+            'is_editable' => $this->is_editable,
         ];
     }
 }

@@ -6,7 +6,7 @@
         "contact": {
             "email": "yan.kudriavtsev@gmail.com"
         },
-        "version": "1.0.0"
+        "version": "0.1.0"
     },
     "paths": {
         "/auth/login": {
