@@ -25,13 +25,6 @@ class AuthController extends Controller
         } catch (InvalidCredentialsException $e) {
             // TODO return resource
             return response()->json(['message' => 'Invalid Credentials'], 422);
-        } catch (\Exception $e) {
-            $this->logger->error($e->getTraceAsString());
-
-            return response()->json(
-                ['message' => 'Server error. Try again later'],
-                500
-            );
         }
     }
 }

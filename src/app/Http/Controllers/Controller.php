@@ -8,7 +8,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 /**
  * @OA\Info(
  *     description="Sol.Workspace API",
- *     version="1.0.0",
+ *     version="0.1.0",
  *     title="",
  *     @OA\Contact(
  *         email="yan.kudriavtsev@gmail.com"

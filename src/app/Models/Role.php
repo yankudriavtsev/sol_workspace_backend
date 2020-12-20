@@ -13,7 +13,12 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug',
+        'name', 'slug', 'is_visible',
+    ];
+
+    protected $casts = [
+        'is_editable' => 'boolean',
+        'is_visible'  => 'boolean',
     ];
 
     public function permissions(): HasMany

@@ -16,4 +16,10 @@ interface BaseInterface
     public function exists(array $conditions): bool;
 
     public function paginate(): Paginator;
+
+    public function getById(int $connectionId): ?Model;
+
+    public function update(int $entityId, array $data): void;
+
+    public function deleteByConditions(array $conditions): void;
 }

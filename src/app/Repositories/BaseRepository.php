@@ -25,6 +25,11 @@ abstract class BaseRepository implements BaseInterface
         return ($this->getModel())::create($data);
     }
 
+    public function update(int $entityId, array $data): void
+    {
+        ($this->getModel())::where(['id' => $entityId])->update($data);
+    }
+
     public function exists(array $conditions): bool
     {
         return ($this->getModel())::where($conditions)->exists();
@@ -33,5 +38,15 @@ abstract class BaseRepository implements BaseInterface
     public function paginate(): Paginator
     {
         return ($this->getModel())::paginate();
+    }
+
+    public function getById(int $connectionId): ?Model
+    {
+        return ($this->getModel())::find($connectionId);
+    }
+
+    public function deleteByConditions(array $conditions): void
+    {
+        ($this->getModel())::where($conditions)->delete();
     }
 }

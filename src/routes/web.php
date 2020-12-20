@@ -76,4 +76,26 @@ $router->group(['prefix' => 'roles', 'middleware' => 'authenticate'], function (
      * )
      */
     $router->get('/', ['uses' => 'RolesController@list', 'middleware' => 'authorize:' . PermissionEnum::ROLES_VIEW]);
+
+    $router->group(['middleware' => 'authorize:' . PermissionEnum::ROLES_VIEW], function () use ($router) {
+        $router->get(
+            '/{roleId}',
+            ['uses' => 'RolesController@show', 'middleware' => 'authorize:' . PermissionEnum::ROLES_VIEW]
+        );
+
+        $router->post(
+            '/',
+            ['uses' => 'RolesController@create', 'middleware' => 'authorize:' . PermissionEnum::ROLES_MANAGE]
+        );
+
+        $router->put(
+            '/{roleId}',
+            ['uses' => 'RolesController@update', 'middleware' => 'authorize:' . PermissionEnum::ROLES_MANAGE]
+        );
+
+        $router->delete(
+            '/{roleId}',
+            ['uses' => 'RolesController@delete', 'middleware' => 'authorize:' . PermissionEnum::ROLES_MANAGE]
+        );
+    });
 });

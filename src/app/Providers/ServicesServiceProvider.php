@@ -22,5 +22,10 @@ class ServicesServiceProvider extends ServiceProvider
             'App\Services\Permission\PermissionServiceInterface',
             'App\Services\Permission\PermissionService'
         );
+
+        $this->app->bind(
+            'App\Services\Role\RoleServiceInterface',
+            'App\Services\Role\RoleService'
+        );
     }
 }
