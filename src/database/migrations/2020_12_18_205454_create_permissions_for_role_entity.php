@@ -25,6 +25,16 @@ class CreatePermissionsForRoleEntity extends Migration
                 ]
             ]
         );
+
+        $newPermissions = \DB::table('permissions')->where('section', 'roles')->get();
+        $adminRole = \DB::table('roles')->where('slug', 'admin')->first();
+
+        foreach ($newPermissions as $permission) {
+            \DB::table('permission_role')->insert([
+                'permission_id' => $permission->id,
+                'role_id' => $adminRole->id
+            ]);
+        }
     }
 
     /**
