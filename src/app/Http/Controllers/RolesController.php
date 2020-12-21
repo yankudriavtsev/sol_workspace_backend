@@ -11,7 +11,7 @@ use App\Services\Role\Exceptions\UneditableRoleException;
 class RolesController extends Controller
 {
     private RoleRepositoryInterface $roleRepository;
-    protected RoleServiceInterface $roleService;
+    private RoleServiceInterface $roleService;
 
     public function __construct(RoleRepositoryInterface $roleRepostory, RoleServiceInterface $roleService)
     {
@@ -42,7 +42,7 @@ class RolesController extends Controller
             [
                 'name' => 'required|string',
                 'slug' => 'required|string|unique:roles',
-                'is_visible' => 'required|boolean'
+                'is_active' => 'required|boolean'
             ]
         );
 
@@ -62,7 +62,7 @@ class RolesController extends Controller
             [
                 'name' => 'required|string',
                 'slug' => 'required|string|unique:roles,slug,' . $role->id,
-                'is_visible' => 'required|boolean'
+                'is_active' => 'required|boolean'
             ]
         );
 
