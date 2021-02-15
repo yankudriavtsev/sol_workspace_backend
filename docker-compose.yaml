@@ -62,7 +62,6 @@ services:
       - ./src/:/var/www/html/
     networks:
       - sol_workspace
-    user: ${CURRENT_UID}
 
   sol_workspace_redis:
     container_name: sol_workspace_redis

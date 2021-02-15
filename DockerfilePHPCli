@@ -1,5 +1,7 @@
 FROM php:7.4-cli-alpine
 
+WORKDIR /var/www/html
+
 RUN apk update && \
     apk add --no-cache pcre-dev $PHPIZE_DEPS postgresql-dev composer && \
     pecl install -o -f redis && \
@@ -9,3 +11,13 @@ RUN apk update && \
     apk del $PHPIZE_DEPS
 
 ENV COMPOSER_MEMORY_LIMIT -1
+
+RUN addgroup -g 1000 www
+RUN adduser -u 1000 -s /bin/ash -G www www -D
+
+COPY --chown=www:www ./src /var/www/html
+
+USER www
+
+EXPOSE 9000
+CMD ["php-fpm"]
