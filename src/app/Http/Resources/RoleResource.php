@@ -25,6 +25,16 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         type="string",
  *         example="role_slug"
  *     ),
+ *     @OA\Property(
+ *         property="is_editable",
+ *         type="boolean",
+ *         example=true
+ *     ),
+ *     @OA\Property(
+ *         property="is_active",
+ *         type="boolean",
+ *         example=true
+ *     ),
  * )
  */
 class RoleResource extends JsonResource
@@ -35,7 +45,7 @@ class RoleResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'is_visible' => $this->is_visible,
+            'is_active' => $this->is_active,
             'is_editable' => $this->is_editable,
         ];
     }

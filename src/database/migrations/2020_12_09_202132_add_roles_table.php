@@ -19,7 +19,7 @@ class AddRolesTable extends Migration
                 $table->string('name');
                 $table->string('slug')->unique();
                 $table->tinyInteger('is_editable')->default(1);
-                $table->tinyInteger('is_visible')->default(1);
+                $table->tinyInteger('is_active')->default(1);
                 $table->timestamps();
             });
         }

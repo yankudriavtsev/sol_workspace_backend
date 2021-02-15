@@ -5,11 +5,12 @@ services:
     container_name: sol_workspace_database
     image: postgres:13-alpine
     volumes:
-      - ./database/data/:/var/lib/postgresql/data/
+      - sol_workspace_api_db_data:/pg-data
       - ./database/init/:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: secret
+      PGDATA: /pg-data
     networks:
       - sol_workspace
 
@@ -20,7 +21,7 @@ services:
       dockerfile: DockerfileAdminer
     image: sol_workspace/adminer:v1
     ports:
-      - 8011:8080
+      - ${ADMINER_PORT}:8080
     networks:
       - sol_workspace
 
@@ -34,7 +35,7 @@ services:
       - ./src/:/var/www/html/
       - ./nginx/logs/:/var/log/nginx/
     ports:
-      - 8010:8010
+      - ${NGINX_PORT}:443
     networks:
       sol_workspace:
         aliases:
@@ -61,7 +62,6 @@ services:
       - ./src/:/var/www/html/
     networks:
       - sol_workspace
-    user: ${CURRENT_UID}
 
   sol_workspace_redis:
     container_name: sol_workspace_redis
@@ -75,9 +75,12 @@ services:
     environment:
       - REDIS_HOSTS=local:sol_workspace_redis:6379
     ports:
-      - "8012:8081"
+      - "${REDIS_COMMANDER_PORT}:8081"
     networks:
       - sol_workspace
+
+volumes:
+  sol_workspace_api_db_data:
 
 networks:
   sol_workspace: 
