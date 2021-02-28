@@ -1,91 +1,91 @@
 version: '3.5'
 
 services:
-  sol_workspace_database:
-    container_name: sol_workspace_database
+  clementine_database:
+    container_name: clementine_database
     image: postgres:13-alpine
     volumes:
-      - sol_workspace_api_db_data:/pg-data
+      - clementine_db_data:/pg-data
       - ./database/init/:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: secret
       PGDATA: /pg-data
     networks:
-      - sol_workspace
+      - clementine
 
-  sol_workspace_adminer:
-    container_name: sol_workspace_adminer
+  clementine_adminer:
+    container_name: clementine_adminer
     build:
       context: ./
       dockerfile: DockerfileAdminer
-    image: sol_workspace/adminer:v1
+    image: clementine/adminer:v1
     ports:
       - ${ADMINER_PORT}:8080
     networks:
-      - sol_workspace
+      - clementine
 
-  sol_workspace_nginx:
+  clementine_nginx:
     build:
       context: ./
       dockerfile: DockerfileNginx
-    image: sol_workspace/nginx:v1
-    container_name: sol_workspace_nginx
+    image: clementine/nginx:v1
+    container_name: clementine_nginx
     volumes:
       - ./src/:/var/www/html/
       - ./nginx/logs/:/var/log/nginx/
     ports:
       - ${NGINX_PORT}:443
     networks:
-      sol_workspace:
+      clementine:
         aliases:
           - api.loc-sol-workspace.docker
 
-  sol_workspace_php:
+  clementine_php:
     build:
       context: ./
       dockerfile: DockerfilePHP
-    image: sol_workspace/php:v1
-    container_name: sol_workspace_php
+    image: clementine/php:v1
+    container_name: clementine_php
     extra_hosts:
       - host.docker.internal:${DOCKER_HOST_IP}
     volumes:
       - ./src/:/var/www/html
       - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
-      - sol_workspace
+      - clementine
 
-  sol_workspace_php_cli:
+  clementine_php_cli:
     build:
       context: ./
       dockerfile: DockerfilePHPCli
-    image: sol_workspace/php_cli:v1
-    container_name: sol_workspace_php_cli
+    image: clementine/php_cli:v1
+    container_name: clementine_php_cli
     volumes:
       - ./src/:/var/www/html/
     networks:
-      - sol_workspace
+      - clementine
 
-  sol_workspace_redis:
-    container_name: sol_workspace_redis
+  clementine_redis:
+    container_name: clementine_redis
     image: redis:5-alpine
     networks:
-      - sol_workspace
+      - clementine
 
-  sol_workspace_redis_commander:
-    container_name: sol_workspace_redis_commander
+  clementine_redis_commander:
+    container_name: clementine_redis_commander
     image: rediscommander/redis-commander:latest
     environment:
-      - REDIS_HOSTS=local:sol_workspace_redis:6379
+      - REDIS_HOSTS=local:clementine_redis:6379
     ports:
       - "${REDIS_COMMANDER_PORT}:8081"
     networks:
-      - sol_workspace
+      - clementine
 
 volumes:
-  sol_workspace_api_db_data:
+  clementine_db_data:
 
 networks:
-  sol_workspace: 
+  clementine: 
     external: false
-    name: sol_workspace
+    name: clementine
