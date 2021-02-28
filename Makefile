@@ -4,3 +4,9 @@ phpcli:
 migrate:
 	CURRENT_UID=${CURRENT_UID}:${CURRENT_UID} docker-compose run -w "/var/www/html" --rm sol_workspace_php_cli php artisan migrate
 
+start:
+	docker-compose up -d
+
+stop:
+	docker-compose down
+

@@ -47,8 +47,11 @@ services:
       dockerfile: DockerfilePHP
     image: sol_workspace/php:v1
     container_name: sol_workspace_php
+    extra_hosts:
+      - host.docker.internal:${DOCKER_HOST_IP}
     volumes:
       - ./src/:/var/www/html
+      - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
       - sol_workspace
 
