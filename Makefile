@@ -1,4 +1,4 @@
-init: clear docker-pull docker-build start
+init: clear docker-pull docker-build project-build start
 restart: stop start
 
 start:
@@ -20,4 +20,7 @@ phpcli:
 	docker-compose run --rm clementine_php_cli /bin/ash
 
 db-migrate:
-	docker-compose run -w "/var/www/html" --rm clementine_php_cli php artisan migrate
+	docker-compose run --rm clementine_php_cli php artisan migrate
+
+project-build:
+	docker-compose run --rm clementine_php_cli composer install
