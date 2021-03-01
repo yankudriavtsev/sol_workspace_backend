@@ -1,7 +1,6 @@
-src/vendor
-src/Homestead.json
-src/Homestead.yaml
-src/.env
-src/.phpunit.result.cache
-database/data/
+/api/vendor
+/api/Homestead.json
+/api/Homestead.yaml
+/api/.env
+/api/.phpunit.result.cache
 .env
